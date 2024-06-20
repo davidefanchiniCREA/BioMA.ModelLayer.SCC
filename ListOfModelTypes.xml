@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ModelType>
+  <Item>LightInterception</Item>
+  <Item>Development</Item>
+  <Item>WaterUptake</Item>
+  <Item>NitrogenUptake</Item>
+  <Item>RadiationInterception</Item>
+  <Item>SoilEvaporation</Item>
+  <Item>RunOff</Item>
+  <Item>SoilWaterRedistribution</Item>
+  <Item>SoilOrganicMatterMineralization</Item>
+  <Item>SoilNitrificatication</Item>
+  <Item>SoilNitrogenVolitilization</Item>
+  <Item>SoilErosion</Item>
+  <Item>CropPartitioning</Item>
+</ModelType>

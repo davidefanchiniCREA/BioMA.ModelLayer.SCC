@@ -1,0 +1,402 @@
+﻿
+(#ClassHeaderComments#)
+
+using System;
+using System.Collections.Generic;
+using System.Xml;
+using System.Linq;
+using CRA.ModelLayer.MetadataTypes;
+using CRA.ModelLayer.Core;
+using CRA.ModelLayer.Strategy;
+using System.Reflection;
+using VarInfo=CRA.ModelLayer.Core.VarInfo;
+using Preconditions=CRA.ModelLayer.Core.Preconditions;
+
+(#Directives#);
+
+namespace (#Namespace#)
+{
+
+	/// <summary>
+	///Class (#ClassName#)
+    /// (#Description#)
+    /// </summary>
+	public class (#ClassName#) : (#InterfaceIStrategyComponent#)
+	{
+
+		private ITestsOutput _preconditionsWriter;
+
+		public ITestsOutput PreconditionsWriter
+        {
+			get
+            {
+				return _preconditionsWriter;
+            }
+
+			set
+            {
+				_preconditionsWriter = value;
+				foreach (IStrategy strategy in this.GetAllPossibleAssociatedStrategies())
+                {
+					strategy.PreconditionsWriter = _preconditionsWriter;
+                }
+            }
+        }
+
+
+	#region Constructor
+
+			public (#ClassName#)()
+			{
+				(#ModellingOptionsManager#)
+			
+				SetStaticParametersVarInfoDefinitions();
+				SetPublisherData();
+					
+			}
+
+	#endregion
+
+	#region Implementation of IAnnotatable
+
+			/// <summary>
+			/// Description of the model
+			/// </summary>
+			public string Description
+			{
+				get { return "(#Description#)"; }
+			}
+			
+			/// <summary>
+			/// URL to access the description of the model
+			/// </summary>
+			public string URL
+			{
+				get { return "(#URLOntology#)"; }
+			}
+		
+
+	#endregion
+	
+	#region Implementation of IStrategy
+
+			/// <summary>
+			/// Domain of the model.
+			/// </summary>
+			public string Domain
+			{
+				get {  return "(#Domain#)"; }
+			}
+
+			/// <summary>
+			/// Type of the model.
+			/// </summary>
+			public string ModelType
+			{
+				get { return "(#ModelType#)"; }
+			}
+
+			/// <summary>
+			/// Declare if the strategy is a ContextStrategy, that is, it contains logic to select a strategy at run time. 
+			/// </summary>
+			public bool IsContext
+			{
+					get { return  (#IsContext#); }
+			}
+
+			/// <summary>
+			/// Timestep to be used with this strategy
+			/// </summary>
+			public IList<int> TimeStep
+			{
+				get
+				{
+					IList<int> ts = new List<int>();
+					(#TimeSteps#)
+					return ts;
+				}
+			}
+	
+	
+	#region Publisher Data
+
+			private PublisherData _pd;
+			private  void SetPublisherData()
+			{
+					// Set publishers' data
+					(#SetPublisherMetaInformation#)
+			}
+
+			public PublisherData PublisherData
+			{
+				get { return _pd; }
+			}
+
+	#endregion
+
+	#region ModellingOptionsManager
+
+			private ModellingOptionsManager _modellingOptionsManager;
+			
+			public ModellingOptionsManager ModellingOptionsManager
+			{
+				get { return _modellingOptionsManager; }            
+			}
+
+	#endregion
+
+			/// <summary>
+			/// Return the types of the domain classes used by the strategy
+			/// </summary>
+			/// <returns></returns>
+			public IEnumerable<Type> GetStrategyDomainClassesTypes()
+			{
+				return new List<Type>() {  (#TypesDomainClasses#) };
+			}
+
+	#endregion
+
+    #region Instances of the parameters
+			
+			// Getter and setters for the value of the parameters of the strategy. The actual parameters are stored into the ModelingOptionsManager of the strategy.
+
+			(#ParametersInstances#)
+
+			// Getter and setters for the value of the parameters of a composite strategy
+			(#ParametersInstancesComposite#)
+
+	#endregion		
+
+	
+	#region Parameters initialization method
+			
+            /// <summary>
+            /// Set parameter(s) current values to the default value
+            /// </summary>
+            public void SetParametersDefaultValue()
+            {
+				_modellingOptionsManager.SetParametersDefaultValue();
+				(#SetDefaultValuesParametersComposite#) 
+
+					//GENERATED CODE END - PLACE YOUR CUSTOM CODE BELOW - Section5
+					//Code written below will not be overwritten by a future code generation
+
+					//Custom initialization of the parameter. E.g. initialization of the array dimensions of array parameters
+
+					//End of custom code. Do not place your custom code below. It will be overwritten by a future code generation.
+					//PLACE YOUR CUSTOM CODE ABOVE - GENERATED CODE START - Section5 
+            }
+
+	#endregion		
+
+	#region Static parameters VarInfo definition
+
+			// Define the properties of the static VarInfo of the parameters
+			private static void SetStaticParametersVarInfoDefinitions()
+			{                                
+                (#SetVarInfo#)       
+			}
+
+			//Parameters static VarInfo list 
+			(#ParametersVarInfo#)					
+			
+			//Parameters static VarInfo list of the composite class
+			(#ParametersVarInfoComposite#)			
+
+	#endregion
+	
+	#region pre/post conditions management		
+
+			/// <summary>
+			/// Test to verify the postconditions
+			/// </summary>
+			public string TestPreconditionsOnParameters(string callID)
+			{
+				try
+				{
+					//Create the collection of the conditions to test
+					ConditionsCollection prc = new ConditionsCollection();
+					Preconditions pre = new Preconditions();
+
+					(#PreConditionsRangeBasedParameters#)
+
+					(#CompositePreConditionsParameters#)
+
+					//GENERATED CODE END - PLACE YOUR CUSTOM CODE BELOW - Section6
+					//Code written below will not be overwritten by a future code generation
+
+        
+
+					//End of custom code. Do not place your custom code below. It will be overwritten by a future code generation.
+					//PLACE YOUR CUSTOM CODE ABOVE - GENERATED CODE START - Section6 
+
+					//Get the evaluation of preconditions;					
+					string preConditionsResult =pre.VerifyPreconditions(prc, callID);
+					//if we have errors, send it to the configured output 
+					if(!string.IsNullOrEmpty(preConditionsResult)) { pre.TestsOut(PreconditionsWriter, preConditionsResult, true, "PreConditions errors in component (#Namespace#), strategy " + this.GetType().Name ); }
+					return preConditionsResult;
+				}
+				catch (Exception exception)
+				{
+					//Uncomment the next line to use the trace
+					//	TraceStrategies.TraceEvent(System.Diagnostics.TraceEventType.Error, 1002,"Strategy: " + this.GetType().Name + " - Unhandled exception running pre-conditions");
+
+					string msg = "Component (#Namespace#), " + this.GetType().Name + ": Unhandled exception running pre-condition test on parameters. ";
+					throw new Exception(msg, exception);
+				}
+			}
+
+		    /// <summary>
+			/// Test to verify the postconditions
+			/// </summary>
+			public string TestPostConditions((#TypesAndInstancesForPrePostConditions#), string callID)
+			{
+				try
+				{
+					//Set current values of the outputs to the static VarInfo representing the output properties of the domain classes				
+					(#SetCurrentValuesOutputs#)
+					
+					//Create the collection of the conditions to test
+					ConditionsCollection prc = new ConditionsCollection();
+					Preconditions pre = new Preconditions();            
+					
+					(#PostConditionsRangeBased#)
+
+					(#CompositePostConditions#)
+
+					//GENERATED CODE END - PLACE YOUR CUSTOM CODE BELOW - Section4
+					//Code written below will not be overwritten by a future code generation
+
+        
+
+					//End of custom code. Do not place your custom code below. It will be overwritten by a future code generation.
+					//PLACE YOUR CUSTOM CODE ABOVE - GENERATED CODE START - Section4 
+
+					//Get the evaluation of postconditions
+					string postConditionsResult =pre.VerifyPostconditions(prc, callID);
+					//if we have errors, send it to the configured output 
+					if(!string.IsNullOrEmpty(postConditionsResult)) { pre.TestsOut(PreconditionsWriter, postConditionsResult, true, "PostConditions errors in component (#Namespace#), strategy " + this.GetType().Name ); }
+					return postConditionsResult;
+				}
+				catch (Exception exception)
+				{
+					//Uncomment the next line to use the trace
+					//TraceStrategies.TraceEvent(System.Diagnostics.TraceEventType.Error, 1001,	"Strategy: " + this.GetType().Name + " - Unhandled exception running post-conditions");
+
+					string msg = "Component (#Namespace#), " + this.GetType().Name + ": Unhandled exception running post-condition test. ";
+					throw new Exception(msg, exception);
+				}
+			}
+
+			/// <summary>
+			/// Test to verify the preconditions
+			/// </summary>
+			public string TestPreConditions((#TypesAndInstancesForPrePostConditions#), string callID)
+			{
+				try
+				{
+					//Set current values of the inputs to the static VarInfo representing the input properties of the domain classes				
+					(#SetCurrentValuesInputs#)
+
+					//Create the collection of the conditions to test
+					ConditionsCollection prc = new ConditionsCollection();
+					Preconditions pre = new Preconditions();
+            
+					(#PreConditionsRangeBasedInputs#)
+
+					(#CompositePreConditions#)
+
+					string _preconditionsOnParametersResult = TestPreconditionsOnParameters(callID);
+
+					//GENERATED CODE END - PLACE YOUR CUSTOM CODE BELOW - Section3
+					//Code written below will not be overwritten by a future code generation
+
+        
+
+					//End of custom code. Do not place your custom code below. It will be overwritten by a future code generation.
+					//PLACE YOUR CUSTOM CODE ABOVE - GENERATED CODE START - Section3 
+								
+					//Get the evaluation of preconditions;					
+					string preConditionsResult =pre.VerifyPreconditions(prc, callID);
+					if (preConditionsResult == null)
+					{
+						preConditionsResult = _preconditionsOnParametersResult;
+					}
+					else if (_preconditionsOnParametersResult == null)
+					{
+						preConditionsResult = preConditionsResult;
+					}
+					else
+					{
+						preConditionsResult = preConditionsResult + _preconditionsOnParametersResult;
+					}
+					//if we have errors, send it to the configured output 
+					if(!string.IsNullOrEmpty(preConditionsResult)) { pre.TestsOut(PreconditionsWriter, preConditionsResult, true, "PreConditions errors in component (#Namespace#), strategy " + this.GetType().Name ); }
+					return preConditionsResult;
+				}
+				catch (Exception exception)
+				{
+					//Uncomment the next line to use the trace
+					//	TraceStrategies.TraceEvent(System.Diagnostics.TraceEventType.Error, 1002,"Strategy: " + this.GetType().Name + " - Unhandled exception running pre-conditions");
+
+					string msg = "Component (#Namespace#), " + this.GetType().Name + ": Unhandled exception running pre-condition test. ";
+					throw new Exception(msg, exception);
+				}
+			}
+
+		
+	#endregion
+		
+
+
+	#region Model
+
+		 	/// <summary>
+			/// Run the strategy to calculate the outputs. In case of error during the execution, the preconditions tests are executed.
+			/// </summary>
+			public void (#ModelMethodName#)((#TypesAndInstances#))
+			{
+				try
+				{
+					CalculateModel((#InstancesOfTypes#));
+
+					//Uncomment the next line to use the trace
+					//TraceStrategies.TraceEvent(System.Diagnostics.TraceEventType.Verbose, 1005,"Strategy: " + this.GetType().Name + " - Model executed");
+				}
+				catch (Exception exception)
+				{
+					//Uncomment the next line to use the trace
+					//TraceStrategies.TraceEvent(System.Diagnostics.TraceEventType.Error, 1003,		"Strategy: " + this.GetType().Name + " - Unhandled exception running model");
+
+					string msg = "Error in component (#Namespace#), strategy: " + this.GetType().Name + ": Unhandled exception running model. "+exception.GetType().FullName+" - "+exception.Message;				
+					throw new Exception(msg, exception);
+				}
+			}
+
+		
+
+			private void CalculateModel((#TypesAndInstances#))
+			{				
+				(#CompositeCall#)
+
+				//GENERATED CODE END - PLACE YOUR CUSTOM CODE BELOW - Section1
+				//Code written below will not be overwritten by a future code generation
+
+        
+
+				//End of custom code. Do not place your custom code below. It will be overwritten by a future code generation.
+				//PLACE YOUR CUSTOM CODE ABOVE - GENERATED CODE START - Section1 
+			}
+
+				(#Composite#)
+
+	#endregion
+
+
+				//GENERATED CODE END - PLACE YOUR CUSTOM CODE BELOW - Section2
+				//Code written below will not be overwritten by a future code generation
+
+				//End of custom code. Do not place your custom code below. It will be overwritten by a future code generation.
+				//PLACE YOUR CUSTOM CODE ABOVE - GENERATED CODE START - Section2 
+	}
+}

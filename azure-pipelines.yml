@@ -1,0 +1,32 @@
+﻿
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+resources: 
+    repositories:
+      - repository: templates
+        type: git
+        name: BioMA.AzurePipelines/BioMA.AzurePipelines
+
+# the build will trigger on any changes to the master branch
+trigger:
+- master
+
+# the build will run on a Microsoft hosted agent, using the lastest Windows VM Image
+pool:
+  vmImage: 'windows-latest'
+
+# these variables are available throughout the build file
+# just the build configuration is defined, in this case we are building Release packages
+variables:
+  BuildConfiguration: 'debug'
+  MajorVersionOfArtifact: '1.0.0' # This must be incremented even when we prepare a new preliminary version,
+                                   # starting from the decremented stable version
+  SolutionPath: 'BioMA.ModelLayer.SCC\BioMA.ModelLayer.SCC.sln'
+
+steps:
+  - checkout: self
+  - checkout: templates
+  - template: templates/build.yml@templates

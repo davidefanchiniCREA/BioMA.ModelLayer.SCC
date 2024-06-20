@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Domains>
+  <Item>SoilWater</Item>
+  <Item>Crop</Item>
+  <Item>Weather</Item>
+  <Item>Diseases</Item>
+  <Item>SoilCarbon</Item>
+  <Item>SoilNitrogen</Item>
+  <Item>AgroManagement</Item>
+</Domains>

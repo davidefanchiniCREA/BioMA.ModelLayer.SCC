@@ -1,0 +1,55 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Update="SwitchUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="SwitchValuesUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="SwitchValueUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\CRA_cattura_logo.PNG" />
+    <Content Include="Resources\FP7_logo.jpg" />
+    <Content Include="Resources\Logo_EC.jpg" />
+    <Content Include="Resources\MODEXTREME_main.jpg" />
+    <None Update="Help\SCC_User_Guide.chm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="Lutil.lsf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Help\ReleaseNotes.txt" />
+    <Content Include="ListOfDomains.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ListOfModelTypes.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\AttributionNoCommercialShareAlike.png" />
+    <Content Include="Resources\CREA_NOSCRITTE_129x70.png" />
+    <Content Include="SCC.ico" />
+    <Content Include="StrategyTemplate.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="StrategyTemplateTags.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="BioMA.ModelLayer" Version="8.0.0-beta" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+  </ItemGroup>
+</Project>
